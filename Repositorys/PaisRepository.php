@@ -9,23 +9,31 @@ class PaisRepository implements IRepository {
 		$this->conn = MySqlConnection::getConnection(DSN, USER, PASSWORD);
 	}
 
-	public function add($person) {
-		return $this->conn::insertQuery($person);
+	public function save($pais) {
+		if ($pais->getId() > 0) {
+			return $this->update($pais);
+		} else {
+			return $this->add($pais);
+		}
 	}
 
-	public function update($person) {
-		return $this->conn::updateQuery($person);
+	public function add($pais) {
+		return $this->conn::insertQuery($pais);
+	}
+
+	public function update($pais) {
+		return $this->conn::updateQuery($pais);
 	}
 
 	public function delete($id) {
-		$query = 'DELETE FROM paises WHERE id = ?';
+		$query = 'DELETE FROM pais WHERE id = ?';
 		$stmt = $this->conn::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		return $stmt->execute();
 	}
 
-	public function getById(int $id) {
-		$query = 'SELECT * FROM paises WHERE id = ?';
+	public function getById($id) {
+		$query = 'SELECT * FROM pais WHERE id = ?';
 		$stmt = $this->conn::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -33,7 +41,7 @@ class PaisRepository implements IRepository {
 	}
 
 	public function getAll() {
-		$query = 'SELECT * FROM paises';
+		$query = 'SELECT * FROM pais';
 		$stmt = $this->conn::$connection->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll();

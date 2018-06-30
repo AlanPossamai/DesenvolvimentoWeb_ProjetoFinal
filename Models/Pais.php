@@ -5,7 +5,14 @@ class Pais {
 	private $id;
 	private $nome;
 	private $moeda;
-	private $codigoMoeda;
+	private $codigo_moeda;
+
+	public function __construct($pais) {
+		$this->id = $pais['id'];
+		$this->nome = $pais['nome'];
+		$this->moeda = $pais['moeda'];
+		$this->codigo_moeda = $pais['codigo_moeda'];
+	}
 
 	public function getId() {
 		return $this->id;
@@ -31,12 +38,12 @@ class Pais {
 		return $this->moeda = $moeda;
 	}
 
-	public function getCodigoMoeda() {
-		return $this->codigoMoeda;
+	public function getCodigo_moeda() {
+		return $this->codigo_moeda;
 	}
 
-	public function setCodigoMoeda($codigoMoeda) {
-		return $this->codigoMoeda = $codigoMoeda;
+	public function setCodigo_moeda($codigo_moeda) {
+		return $this->codigo_moeda = $codigo_moeda;
 	}
 
 	public function getAttributes() {

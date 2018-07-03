@@ -1,0 +1,1 @@
+RENAME TABLE clientes TO cliente;

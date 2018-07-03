@@ -18,23 +18,23 @@ class PaisRepository implements IRepository {
 	}
 
 	public function add($pais) {
-		return $this->conn::insertQuery($pais);
+		return MySqlConnection::insertQuery($pais);
 	}
 
 	public function update($pais) {
-		return $this->conn::updateQuery($pais);
+		return MySqlConnection::updateQuery($pais);
 	}
 
 	public function delete($id) {
 		$query = 'DELETE FROM pais WHERE id = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		return $stmt->execute();
 	}
 
 	public function getById($id) {
 		$query = 'SELECT * FROM pais WHERE id = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetch();
@@ -42,7 +42,7 @@ class PaisRepository implements IRepository {
 
 	public function getAll() {
 		$query = 'SELECT * FROM pais';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}

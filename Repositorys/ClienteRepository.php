@@ -2,7 +2,7 @@
 
 require_once '../config.php';
 
-class EmpresaRepository implements IRepository {
+class ClienteRepository implements IRepository {
 	private $conn;
 
 	public function __construct() {
@@ -26,17 +26,17 @@ class EmpresaRepository implements IRepository {
 	}
 
 	public function delete($id) {
-		$query = 'DELETE FROM empresa WHERE id = ?';
+		$query = 'DELETE FROM cliente WHERE id = ?';
 		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		return $stmt->execute();
 	}
 
 	public function getById($id) {
-		$query = 'SELECT e.*, p.nome AS pais ' .
-			'FROM empresa e ' .
-			'JOIN pais p ON p.id = e.idPais ' .
-			'WHERE e.id = ?';
+		$query = 'SELECT c.*, e.nome AS pais ' .
+			'FROM cliente c ' .
+			'JOIN empresa e ON e.id = c.idEmpresa ' .
+			'WHERE c.id = ?';
 
 		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
@@ -45,10 +45,10 @@ class EmpresaRepository implements IRepository {
 	}
 
 	public function getAll() {
-		$query = 'SELECT e.*, p.nome AS pais ' .
-			'FROM empresa e ' .
-			'JOIN pais p ON p.id = e.idPais ' .
-			'ORDER BY e.nome, p.nome';
+		$query = 'SELECT c.*, e.nome AS pais ' .
+			'FROM cliente c ' .
+			'JOIN empresa e ON e.id = c.idEmpresa ' .
+			'ORDER BY c.nome, e.nome';
 
 		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->execute();

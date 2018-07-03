@@ -6,15 +6,15 @@ require_once '../config.php';
 try {
 	sleep(mt_rand(0, 20) * 0.1);
 
-	$paisRepository = new PaisRepository();
+	$empresaRepository = new EmpresaRepository();
 
 	if (isset($_GET['id']) && !empty($_GET['id'])) {
-		$paises = $paisRepository->getById($_GET['id']);
+		$empresas = $empresaRepository->getById($_GET['id']);
 	} else {
-		$paises = $paisRepository->getAll();
+		$empresas = $empresaRepository->getAll();
 	}
 
-	echo json_encode($paises);
+	echo json_encode($empresas);
 } catch(Exception $e) {
 	http_response_code(400);
 	echo $e->getMessage();

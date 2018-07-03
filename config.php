@@ -1,6 +1,6 @@
 <?php
 
-define('DSN', 'mysql:dbname=aluno_abc_group;host=127.0.0.1');
+define('DSN', 'mysql:dbname=aluno_abc_group;host=127.0.0.1;charset=utf8');
 define('USER', 'root');
 define('PASSWORD', '');
 

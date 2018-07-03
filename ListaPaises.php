@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
 	<title>ABC Group - Países</title>
 </head>
 
@@ -35,9 +34,14 @@
 		</div>
 		<?php //include_once("./rodape.php"); ?>
 	</div>
+	<div class="wait"></div>
 
+	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/styles.css">
 	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
 	<script type="text/javascript" src="scripts/paises.js"></script>
+
 	<script>
 		$(function() {
 			listar();

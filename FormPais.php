@@ -38,20 +38,25 @@
 					<input type="text" class="form-control" name="codigo_moeda" id="codigoMoeda">
 				</div>
 			</div>
-
-			<div class="row mb-6 mt-4">
-				<div class="col">
-					<button class="btn btn-danger" id="excluir">Excluir</button>
-					<button class="btn btn-success" id="salvar">Salvar</button>
-				</div>
-			</div>
 		</form>
+
+		<div class="row mb-6 mt-4">
+			<div class="col">
+				<button class="btn btn-danger" id="excluir">Excluir</button>
+				<button class="btn btn-success" id="salvar">Salvar</button>
+			</div>
+		</div>
+
 		<?php //include_once("./rodape.php"); ?>
 	</div>
+	<div class="wait"></div>
 
+	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/styles.css">
 	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="scripts/utils.js"></script>
 	<script type="text/javascript" src="scripts/paises.js"></script>
+
 	<script>
 		$(function() {
 			adaptarCampos();

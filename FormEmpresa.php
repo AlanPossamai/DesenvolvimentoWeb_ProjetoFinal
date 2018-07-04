@@ -21,7 +21,7 @@
 			<input type="hidden" name="id" id="id" value="0">
 			<div class="row mb-6 mt-4">
 				<div class="col">
-					<label for="inputEmail">País</label>
+					<label for="pais">País</label>
 					<select class="form-control selectpicker" id="pais" name="idPais">
 						<option value="0">Selecione</option>
 					</select>
@@ -30,7 +30,7 @@
 
 			<div class="row mb-6 mt-4">
 				<div class="col">
-					<label for="inputEmail">Nome</label>
+					<label for="nome">Nome</label>
 					<input type="text" class="form-control" id="nome" name="nome">
 				</div>
 			</div>

@@ -3,23 +3,18 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
-	<title>Inicial Empresa</title>
+	<title>ABC Group - Gerenciar Usuários</title>
 </head>
-
-<?php
-	include_once("./menuConselho.php");
-	include_once("./rodape.php");
-?>
 
 <body>
 	<div class="container">
-		<div class="row">
+		<?php include_once("./menuConselho.php"); ?>
+		<div class="row mt-3">
 			<div class="col-sm-7">
 				<h1>Usuários</h1>
 			</div>
 			<div class="col-sm-5">
-				<a type="button" class="btn btn-primary" href="./FormUsuarioConselho.php">Novo Usuário</a>
+				<a type="button" class="btn btn-primary float-right mt-3" href="./FormUsuarioConselho.php">Novo Usuário</a>
 			</div>
 		</div>
 		<div class="row mb-6 mt-4 text-center">
@@ -28,25 +23,30 @@
 					<thead>
 						<tr>
 							<th scope="col">Nome</th>
+							<th scope="col">Login</th>
 							<th scope="col">Empresa</th>
 							<th scope="col">Ações</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>teste</td>
-							<td>teste</td>
-							<td>
-								<a type="button" class="btn btn-primary" href="#">Ver Detalhes</a>
-								<a type="button" class="btn btn-success" href="#">Editar</a>
-								<a type="button" class="btn btn-danger" href="#">Deletar</a>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="listaUsuarios"></tbody>
 				</table>
 			</div>
 		</div>
+		<?php //include_once("./rodape.php"); ?>
 	</div>
+	<div class="wait"></div>
+
+	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script type="text/javascript" src="scripts/usuarios.js"></script>
+
+	<script>
+		$(function() {
+			listar();
+		});
+	</script>
 </body>
 
 </html>

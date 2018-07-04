@@ -1,6 +1,6 @@
 <?php
 
-class Session {
+class Sessao {
 
 	private static $instance;
 
@@ -8,7 +8,7 @@ class Session {
 
 	public static function getInstance() {
 		if (!isset(self::$instance)) {
-			self::$instance = new Session();
+			self::$instance = new Sessao();
 			session_start();
 			session_regenerate_id(true);
 		}

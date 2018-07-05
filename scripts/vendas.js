@@ -1,0 +1,125 @@
+function editar(id) {
+	window.location.replace('FormVenda.php?id=' + id);
+}
+
+function obter() {
+	$.ajax({
+		url: 'Services/ListarVemda.php',
+		dataType: 'json',
+		data: { 'id': $.urlParam('id') }
+	}).done(function(venda) {
+		console.log(venda);
+		$('#data').val(venda.data);
+		$('#valor').val(venda.valor);
+		$('#cotacaoDolar').val(venda.cotacaoDolar);
+		$('#empresa').val(venda.idEmpresa);
+		$('#cliente').val(venda.idCliente).change();
+	});
+}
+
+function listar() {
+	$.ajax({
+		url: 'Services/ListarVemda.php',
+		dataType: 'json'
+	}).done(function(vendas) {
+		$.each(venda, function() {
+			$('#listaVendas').append(
+				$('<tr>').append(
+					$('<td>', { 'text': this.cliente }),
+					$('<td>', { 'text': this.data }),
+					$('<td>', { 'text': this.valor }),
+					$('<td>').append(
+						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+					)
+				)
+			);
+		});
+	});
+}
+
+function salvar() {
+	var venda = getFormData($('#formVenda'));
+	
+		if (venda.data.trim() == '') {
+			alert('Preencha a data da venda!');
+			return false;
+		}
+		
+		if (venda.valor.trim() == '') {
+			alert('Preencha o valor da venda!');
+			return false;
+		}
+			
+		if (venda.cotacaoDolar.trim() == '') {
+			alert('Preencha a cotação do dólar para a venda!');
+			return false;
+		}
+				
+		if (venda.idCliente.trim() == '') {
+			alert('Selecione o cliente!');
+			return false;
+		}
+
+	$.ajax({
+		url: 'Services/SalvarVenda.php',
+		dataType: 'json',
+		data: { venda }
+	}).always(function (data) {
+		if (data.success) {
+			alert('Venda salva com sucesso!');
+			window.location.replace('ListaVendas.php');
+		} else {
+			alert('Problemas ao salvar. ' + (data.msg || ''));
+		}
+	});
+}
+
+function excluir(id) {
+	if (!confirm('Confirme a exclusão')) {
+		return false;
+	}
+
+	$.ajax({
+		url: 'Services/DeletarVenda.php',
+		dataType: 'json',
+		data: { 'id': id }
+	}).always(function (data) {
+		if (data.success) {
+			alert('Excluída com sucesso!');
+			window.location.replace('ListaVendas.php');
+		} else {
+			alert('Problemas ao excluir. ' + (data.msg || ''));
+		}
+	});
+}
+
+function adaptarCampos() {
+	var idVenda = $.urlParam('id');
+
+	if (idVenda > 0) {
+		obter(idVenda);
+		$('#nome').text('Editar venda');
+		$('#id').val(idVenda);
+		$('#excluir').show();
+	} else {
+		$('#excluir').hide();
+	}
+}
+
+function vincularEventos() {
+	$('#salvar').click(function () {
+		salvar();
+	});
+
+	$('#excluir').click(function () {
+		var venda = getFormData($('#formVenda'));
+
+		if (! venda.id) {
+			alert('a venda ainda não foi cadastrada!');
+			return false;
+		}
+
+		excluir(venda.id);
+	});
+}

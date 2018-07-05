@@ -29,7 +29,7 @@
 					<tbody id="listaClientes"></tbody>
 				</table>
 			</div>
-			<?php //include_once("./rodape.php"); ?>
+			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
 	<div class="wait"></div>

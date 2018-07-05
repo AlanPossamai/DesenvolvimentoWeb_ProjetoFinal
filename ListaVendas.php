@@ -3,23 +3,18 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
-	<title>Vendas Empresa</title>
+	<title>ABC Group - Gerenciar Vendas</title>
 </head>
-
-<?php
-	include_once("./menuEmpresa.php");
-	include_once("./rodape.php");
-?>
 
 <body>
 	<div class="container">
-		<div class="row">
+		<?php include_once("./menuEmpresa.php"); ?>
+		<div class="row mt-3">
 			<div class="col-sm-7">
 				<h1>Vendas</h1>
 			</div>
 			<div class="col-sm-5">
-				<a type="button" class="btn btn-primary" href="./FormVenda.php">Nova Venda</a>
+				<a type="button" class="btn btn-primary float-right mt-3" href="./FormVenda.php">Nova Venda</a>
 			</div>
 		</div>
 		<div class="row mb-6 mt-4 text-center">
@@ -33,21 +28,25 @@
 							<th scope="col">Ações</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">3</th>
-							<td>teste</td>
-							<td>teste</td>
-							<td>
-								<a type="button" class="btn btn-success" href="#">Editar</a>
-								<a type="button" class="btn btn-danger" href="#">Deletar</a>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
+			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
+	<div class="wait"></div>
+
+	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script type="text/javascript" src="scripts/vendas.js"></script>
+
+	<script>
+		$(function() {
+			listar();
+		});
+	</script>
 </body>
 
 </html>

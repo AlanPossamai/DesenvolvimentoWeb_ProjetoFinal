@@ -14,6 +14,8 @@ class Venda {
 		$this->idCliente = $venda['idCliente'];
 		$this->idEmpresa = $venda['idEmpresa'];
 		$this->data = $venda['data'];
+		$this->valor = $venda['valor'];
+		$this->cotacaoDolar = $venda['cotacaoDolar'];
 	}
         
         public function getId() {

@@ -17,7 +17,8 @@ function obter() {
 function listar() {
 	$.ajax({
 		url: 'Services/ListarCliente.php',
-		dataType: 'json'
+		dataType: 'json',
+		data: { 'idEmpresa': 1 }
 	}).done(function(clientes) {
 		$.each(clientes, function() {
 			$('#listaClientes').append(

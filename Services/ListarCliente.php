@@ -10,8 +10,10 @@ try {
 
 	if (isset($_GET['id']) && !empty($_GET['id'])) {
 		$clientes = $clienteRepository->getById($_GET['id']);
+	} elseif (isset($_GET['idEmpresa']) && !empty($_GET['idEmpresa'])) {
+		$clientes = $clienteRepository->getByEmpresa($_GET['idEmpresa']);
 	} else {
-		$clientes = $clienteRepository->getAll();
+		throw new Exception("Bad Request");
 	}
 
 	echo json_encode($clientes);

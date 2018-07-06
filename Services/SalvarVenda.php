@@ -8,7 +8,8 @@ try {
 
 	if (isset($_GET['venda'])) {
 		$vendaRepository = new VendaRepository();
-		$venda = new Cliente($_GET['venda']);
+		$_GET['venda']['data'] = DateFormatter::toDatabase($_GET['venda']['data']);
+		$venda = new Venda($_GET['venda']);
 		$isSaved = $vendaRepository->save($venda);
 
 		if ($isSaved) {

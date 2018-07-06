@@ -4,7 +4,7 @@ function editar(id) {
 
 function obter() {
 	$.ajax({
-		url: 'Services/ListarVemda.php',
+		url: 'Services/ListarVenda.php',
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function(venda) {
@@ -19,10 +19,11 @@ function obter() {
 
 function listar() {
 	$.ajax({
-		url: 'Services/ListarVemda.php',
-		dataType: 'json'
+		url: 'Services/ListarVenda.php',
+		dataType: 'json',
+		data: { 'idEmpresa': 1 }
 	}).done(function(vendas) {
-		$.each(venda, function() {
+		$.each(vendas, function() {
 			$('#listaVendas').append(
 				$('<tr>').append(
 					$('<td>', { 'text': this.cliente }),
@@ -91,6 +92,22 @@ function excluir(id) {
 		} else {
 			alert('Problemas ao excluir. ' + (data.msg || ''));
 		}
+	});
+}
+
+function obterClientes() {
+	$.ajax({
+		url: 'Services/ListarCliente.php',
+		dataType: 'json'
+	}).always(function(paises) {
+		$.each(paises, function() {
+			$('#cliente').append(
+				$('<option>', {
+					'value': this.id,
+					'text': this.nome
+				})
+			);
+		});
 	});
 }
 

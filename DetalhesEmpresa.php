@@ -1,3 +1,10 @@
+<?php
+	require_once './config.php';
+	require_once './Utils/Session.php';
+	require_once './Utils/Authenticator.php';
+	Authenticator::requireLogin();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +15,7 @@
 </head>
 
 <?php
-	include_once("./menuConselho.php");
+	include_once("./menu.php");
 	include_once("./rodape.php");
 ?>
 

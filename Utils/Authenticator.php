@@ -1,38 +1,39 @@
 <?php
 
-require_once '../config.php';
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
 
 class Authenticator {
 
-	public function authenticate($userName, $password) {
-		$userRepository = new UserRepository();
-		$user = $userRepository->getByUsername($userName);
+	public function authenticate($login, $senha) {
+		$usuarioRepository = new UsuarioRepository();
+		$usuario = $usuarioRepository->getByLogin($login);
 
-		if (! $user) {
-			return new ErrorObj('401', 'Usuário não encontrado.', 'userName');
+		if (! $usuario) {
+			return new ErrorObj('401', 'Usuário não encontrado.', 'login');
 		} else {
-			$realName = $userRepository->getPersonNameByIdUser($user['id']);
-			Session::getInstance()->save('realName', $realName);
+			$usuarioObj = new Usuario($usuario);
 
-			$userObj = new User($user['id'], $user['userName'], $user['password'], $user['accessLevel'], $user['firstAccess']);
-			if ($userObj->checkPassword($password)) {
+			if ($usuarioObj->checarSenha($senha)) {
 				if (self::isLogged()) {
 					session_destroy();
 				}
 
-				return self::updateAuth($userObj);
+				return self::updateAuth($usuarioObj);
 			} else {
-				return new ErrorObj('401', 'Senha incorreta.', 'password');
+				return new ErrorObj('401', 'Senha incorreta.', 'senha');
 			}
 		}
 	}
 
-	public static function updateAuth($user = null) {
+	public static function updateAuth($usuario = null) {
 		$session = Session::getInstance();
 
-		if ($user instanceof User) {
-			$auth = new Authentication($user->getId(), $user->getUserName(), $user->getAccessLevel(), date('d-m-Y H:i:s'), $user->isFirstAccess());
+		if ($usuario instanceof Usuario) {
+			$auth = new Authentication($usuario->getId(), $usuario->getLogin(), $usuario->getIdEmpresa(), date('d-m-Y H:i:s'));
 			$session->save('isLogged', true);
+			$session->save('idEmpresa', $auth->getIdEmpresa());
 			$session->save('AUTHENTICATION', $auth);
 			return $auth;
 		} else {
@@ -41,7 +42,6 @@ class Authenticator {
 		}
 	}
 
-	//TODO: validar tempo de sessão - permitir até 30 min sem atividade
 	public static function requireLogin() {
 		if (!self::isLogged()) {
 			self::logout();
@@ -56,65 +56,19 @@ class Authenticator {
 	public static function logout() {
 		$session = Session::getInstance();
 		$session->destroy();
-		echo "<script>window.location.href='index.php'</script>";
+		echo '<script> window.location.replace("index.php"); </script>';
 		exit;
 	}
 
-	public static function redirectFirstAccess() {
-		if (self::isFirstAccess()) {
-			header('Location: updateAccount.php');
-			exit;
-		}
-	}
-
-	public static function isFirstAccess() {
+	public static function verifyPermission($modulo) {
 		$session = Session::getInstance();
 		$auth = $session->getByKey('AUTHENTICATION');
-		return ($auth->isFirstAccess());
-	}
 
-	public static function verifyPermission($permissionId) {
-		if (self::hasPermission($permissionId)) {
-			return true;
-		} else {
-			$permission = self::getPermissionById($permissionId);
-			$permissionError = new ErrorObj(401, 'Você não possui permissão para ' . $permission->getName());
+		if ($auth->getIdEmpresa() != null) {
+			$permissionError = new ErrorObj(401, 'Você não possui permissão para ' . $modulo);
 			echo json_encode($permissionError);
 			exit;
 		}
-	}
-
-	public static function hasPermission($permissionId) {
-		$session = Session::getInstance();
-		$auth = $session->getByKey('AUTHENTICATION');
-
-		$permission = self::getPermissionById($permissionId);
-		$isPermission = ($permission instanceof Permission);
-		return ($auth->getPermissions() >= $permission->getMinimumAccessLevel());
-	}
-
-	private static function getPermissionById($permissionId) {
-		$permissions = self::getPermissions();
-
-		foreach ($permissions as $permission) {
-			if ($permission->getId() == $permissionId) {
-				return $permission;
-			}
-		}
-
-		return null;
-	}
-
-	private static function getPermissions() {
-		return array(
-			new Permission('WRITE_USER', 'gerenciar usuários', 2),
-			new Permission('WRITE_PERSON', 'gerenciar pessoas', 1),
-			new Permission('WRITE_PRODUCT', 'gerenciar produtos', 1),
-
-			new Permission('DELETE_USER', 'excluir usuários', 2),
-			new Permission('DELETE_PERSON', 'excluir pessoas', 2),
-			new Permission('DELETE_PRODUCT', 'excluir produtos', 2),
-		);
 	}
 
 }

@@ -8,9 +8,10 @@ function obter() {
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function(cliente) {
-		console.log(cliente);
-		$('#nome').val(cliente.nome);
-		$('#empresa').val(cliente.idEmpresa).change();
+		if (!displayErrors(cliente)) {
+			$('#nome').val(cliente.nome);
+			$('#empresa').val(cliente.idEmpresa).change();
+		}
 	});
 }
 
@@ -20,17 +21,19 @@ function listar() {
 		dataType: 'json',
 		data: { 'idEmpresa': 1 }
 	}).done(function(clientes) {
-		$.each(clientes, function() {
-			$('#listaClientes').append(
-				$('<tr>').append(
-					$('<td>', { 'text': this.nome }),
-					$('<td>').append(
-						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+		if (!displayErrors(clientes)) {
+			$.each(clientes, function() {
+				$('#listaClientes').append(
+					$('<tr>').append(
+						$('<td>', { 'text': this.nome }),
+						$('<td>').append(
+							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+						)
 					)
-				)
-			);
-		});
+				);
+			});
+		}
 	});
 }
 
@@ -47,12 +50,15 @@ function salvar() {
 		dataType: 'json',
 		data: { cliente }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Cliente salvo com sucesso!');
-			window.location.replace('ListaClientes.php');
-		} else {
-			alert('Problemas ao salvar. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Cliente salvo com sucesso!');
+				window.location.replace('ListaClientes.php');
+			} else {
+				alert('Problemas ao salvar. ' + (data.msg || ''));
+			}
 		}
+
 	});
 }
 
@@ -66,11 +72,13 @@ function excluir(id) {
 		dataType: 'json',
 		data: { 'id': id }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Excluída com sucesso!');
-			window.location.replace('ListaClientes.php');
-		} else {
-			alert('Problemas ao excluir. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Excluída com sucesso!');
+				window.location.replace('ListaClientes.php');
+			} else {
+				alert('Problemas ao excluir. ' + (data.msg || ''));
+			}
 		}
 	});
 }

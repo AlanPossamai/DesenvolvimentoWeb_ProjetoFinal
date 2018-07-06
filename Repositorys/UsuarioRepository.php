@@ -47,8 +47,21 @@ class UsuarioRepository implements IRepository {
 	}
 
 	public function getAll() {
-		$query = 'SELECT * FROM usuario';
+		$idEmpresa = Session::getInstance()->getByKey('idEmpresa');
+
+		$query = 'SELECT u.*, e.nome AS empresa FROM usuario u ' .
+		'LEFT JOIN empresa e ON e.id = u.idEmpresa ';
+
+		if ($idEmpresa) {
+			$query .= 'WHERE u.idEmpresa = ?';
+		}
+
 		$stmt = $this->conn::$connection->prepare($query);
+
+		if ($idEmpresa) {
+			$stmt->bindParam(1, $idEmpresa, PDO::PARAM_INT);
+		}
+
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}

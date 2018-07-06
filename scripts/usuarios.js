@@ -1,5 +1,5 @@
 function editar(id) {
-	window.location.replace('FormUsuarioConselho.php?id=' + id);
+	window.location.replace('FormUsuario.php?id=' + id);
 }
 
 function obter() {
@@ -8,11 +8,13 @@ function obter() {
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function(usuario) {
-		$('#nome').val(usuario.nome);
-		$('#login').val(usuario.login);
-		$('#senha').val('digite a senha');
-		$('#confirmarSenha').val('digite a senha');
-		$('#empresa').val(usuario.idEmpresa || 0).change().attr('disabled', true);
+		if (!displayErrors(usuario)) {
+			$('#nome').val(usuario.nome);
+			$('#login').val(usuario.login);
+			$('#senha').val(usuario.senha);
+			$('#confirmarSenha').val('');
+			$('#empresa').val(usuario.idEmpresa || 0).change().attr('disabled', true);
+		}
 	});
 }
 
@@ -21,19 +23,23 @@ function listar() {
 		url: 'Services/ListarUsuarios.php',
 		dataType: 'json'
 	}).done(function(usuarios) {
-		$.each(usuarios, function () {
-			$('#listaUsuarios').append(
-				$('<tr>').append(
-					$('<td>', { 'text': this.nome }),
-					$('<td>', { 'text': this.login }),
-					$('<td>', { 'text': this.empresa }),
-					$('<td>').append(
-						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+		if (!displayErrors(usuarios)) {
+			$.each(usuarios, function () {
+				var fontweight = (this.empresa ? 'normal' : 'bold');
+
+				$('#listaUsuarios').append(
+					$('<tr>', { style: 'font-weight: ' + fontweight + ';' }).append(
+						$('<td>', { 'text': this.nome }),
+						$('<td>', { 'text': this.login }),
+						$('<td>', { 'html': (this.empresa || 'CONSELHO') }),
+						$('<td>').append(
+							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+						)
 					)
-				)
-			);
-		});
+				);
+			});
+		}
 	});
 }
 
@@ -60,11 +66,13 @@ function salvar() {
 		dataType: 'json',
 		data: { usuario }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Salvo com sucesso!');
-			window.location.replace('ListaUsuariosConselho.php');
-		} else {
-			alert('Problemas ao salvar. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Salvo com sucesso!');
+				window.location.replace('ListaUsuarios.php');
+			} else {
+				alert('Problemas ao salvar. ' + (data.msg || ''));
+			}
 		}
 	});
 }
@@ -79,28 +87,52 @@ function excluir(id) {
 		dataType: 'json',
 		data: { 'id': id }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Excluído com sucesso!');
-			window.location.replace('ListaUsuariosConselho.php');
-		} else {
-			alert('Problemas ao excluir. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Excluído com sucesso!');
+				window.location.replace('ListaUsuarios.php');
+			} else {
+				alert('Problemas ao excluir. ' + (data.msg || ''));
+			}
 		}
 	});
 }
 
 function obterEmpresas() {
+	var idEmpresa = getCookie('idEmpresa');
+	idEmpresa = (idEmpresa == 'null' ? 0 : idEmpresa);
+
+	if (idEmpresa) {
+		$('#empresa').hide().parent().hide();
+	}
+
 	$.ajax({
 		url: 'Services/ListarEmpresas.php',
-		dataType: 'json'
+		dataType: 'json',
+		data: { 'id': idEmpresa }
 	}).always(function(empresas) {
-		$.each(empresas, function () {
-			$('#empresa').append(
-				$('<option>', {
-					'value': this.id,
-					'text': this.nome
-				})
-			);
-		});
+		if (!displayErrors(empresas)) {
+			if (idEmpresa) {
+				$('#empresa').append(
+					$('<option>', {
+						'value': empresas.id,
+						'text': empresas.nome
+					})
+				);
+
+				$('#empresa').val(idEmpresa).change();
+				return false;
+			}
+
+			$.each(empresas, function () {
+				$('#empresa').append(
+					$('<option>', {
+						'value': this.id,
+						'text': this.nome
+					})
+				);
+			});
+		}
 	});
 }
 

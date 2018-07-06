@@ -1,7 +1,10 @@
 <?php
 
-require_once '../config.php';
-// Authenticator::requireLogin();
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
+
+Authenticator::requireLogin();
 
 try {
 	sleep(mt_rand(0, 20) * 0.1);

@@ -1,3 +1,10 @@
+<?php
+	require_once './config.php';
+	require_once './Utils/Session.php';
+	require_once './Utils/Authenticator.php';
+	Authenticator::requireLogin();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,10 +15,10 @@
 
 <body>
 	<div class="container">
-		<?php include_once("./menuConselho.php"); ?>
+		<?php include_once("./menu.php"); ?>
 		<div class="row mt-3">
 			<div class="col-sm-9">
-				<h1>Nova Empresa</h1>
+				<h1 id="titulo">Nova Empresa</h1>
 			</div>
 			<div class="col-sm-3">
 				<a type="button" class="btn btn-primary float-right mt-3" href="ListaEmpresas.php">Voltar</a>
@@ -47,9 +54,16 @@
 	</div>
 	<div class="wait"></div>
 
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="Includes/dist/css/bootstrap.min.css">
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="Includes/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="Includes/assets/js/vendor/popper.min.js"></script>
+	<script type="text/javascript" src="Includes/dist/js/bootstrap.min.js"></script>
+
+	<!-- Project properties -->
 	<link rel="stylesheet" href="styles/styles.css">
-	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="scripts/utils.js"></script>
 	<script type="text/javascript" src="scripts/empresas.js"></script>
 

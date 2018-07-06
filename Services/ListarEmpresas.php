@@ -1,7 +1,10 @@
 <?php
 
-require_once '../config.php';
-// Authenticator::requireLogin();
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
+
+Authenticator::requireLogin();
 
 try {
 	sleep(mt_rand(0, 20) * 0.1);
@@ -11,6 +14,7 @@ try {
 	if (isset($_GET['id']) && !empty($_GET['id'])) {
 		$empresas = $empresaRepository->getById($_GET['id']);
 	} else {
+		Authenticator::verifyPermission('gerenciar empresas');
 		$empresas = $empresaRepository->getAll();
 	}
 

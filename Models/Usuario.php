@@ -36,16 +36,16 @@ class Usuario {
 		return $this->login;
 	}
 
-	public function checklogin($login) {
-		return $this->login == $login;
+	public function setLogin($login) {
+		$this->login = $login;
 	}
 
 	public function getSenha() {
 		return $this->senha;
 	}
 
-	public function setSenha($senha) {
-		$this->senha = $senha;
+	public function checarSenha($senha) {
+		return $this->senha == $senha;
 	}
 
 	public function getIdEmpresa() {
@@ -54,6 +54,10 @@ class Usuario {
 
 	public function setIdEmpresa($idEmpresa) {
 		$this->idEmpresa = $idEmpresa;
+	}
+
+	public function isAdmin() {
+		return ($this->idEmpresa == null);
 	}
 
 	public function getAttributes() {

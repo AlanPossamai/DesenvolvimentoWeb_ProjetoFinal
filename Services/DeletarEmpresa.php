@@ -1,7 +1,11 @@
 <?php
 
-require_once '../config.php';
-// Authenticator::requireLogin();
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
+
+Authenticator::requireLogin();
+Authenticator::verifyPermission('gerenciar empresas');
 
 try {
 	$response = array('success' => false);
@@ -18,5 +22,5 @@ try {
 	echo json_encode($response);
 } catch(Exception $e) {
 	http_response_code(400);
-	echo json_encode(array('success' => false, 'msg' => $e->getMessage()));
+	echo $e->getMessage();
 }

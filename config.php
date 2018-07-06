@@ -32,3 +32,17 @@ spl_autoload_register('autoloadModels');
 spl_autoload_register('autoloadRepositorys');
 spl_autoload_register('autoloadUtils');
 spl_autoload_register('autoloadServices');
+
+error_reporting(E_ERROR | E_PARSE);
+if (class_exists('Session')) {
+	Session::getInstance();
+}
+
+try {
+	if (class_exists('MySqlConnection')) {
+		MySqlConnection::getConnection(DSN, USER, PASSWORD);
+	}
+} catch(Exception $e) {
+	http_response_code(403);
+	exit('<div class="p-5 text-center text-white bg-danger"><p style="font-size:25px;"><strong>Não foi possível conectar-se à base de dados.</strong></p><p class="mt-5">Verifique se a base de dados foi criada. Para criá-la execute o SQL em "' . DIR . 'Utils/DBDefinitions.sql"</p><p>As configurações de acesso à base de dados podem ser alteradas no arquivo config.php</p></div>');
+}

@@ -8,12 +8,13 @@ function obter() {
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function(venda) {
-		console.log(venda);
-		$('#data').val(venda.data);
-		$('#valor').val(venda.valor);
-		$('#cotacaoDolar').val(venda.cotacaoDolar);
-		$('#empresa').val(venda.idEmpresa);
-		$('#cliente').val(venda.idCliente).change();
+		if (!displayErrors(venda)) {
+			$('#data').val(venda.data);
+			$('#valor').val(venda.valor);
+			$('#cotacaoDolar').val(venda.cotacaoDolar);
+			$('#empresa').val(venda.idEmpresa);
+			$('#cliente').val(venda.idCliente).change();
+		}
 	});
 }
 
@@ -23,40 +24,42 @@ function listar() {
 		dataType: 'json',
 		data: { 'idEmpresa': 1 }
 	}).done(function(vendas) {
-		$.each(vendas, function() {
-			$('#listaVendas').append(
-				$('<tr>').append(
-					$('<td>', { 'text': this.cliente }),
-					$('<td>', { 'text': this.data }),
-					$('<td>', { 'text': this.valor }),
-					$('<td>').append(
-						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+		if (!displayErrors(vendas)) {
+			$.each(vendas, function() {
+				$('#listaVendas').append(
+					$('<tr>').append(
+						$('<td>', { 'text': this.cliente }),
+						$('<td>', { 'text': this.data }),
+						$('<td>', { 'text': this.valor }),
+						$('<td>').append(
+							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+						)
 					)
 				)
-			);
-		});
+			});
+		}
 	});
 }
 
 function salvar() {
 	var venda = getFormData($('#formVenda'));
-	
+
 		if (venda.data.trim() == '') {
 			alert('Preencha a data da venda!');
 			return false;
 		}
-		
+
 		if (venda.valor.trim() == '') {
 			alert('Preencha o valor da venda!');
 			return false;
 		}
-			
+
 		if (venda.cotacaoDolar.trim() == '') {
 			alert('Preencha a cotação do dólar para a venda!');
 			return false;
 		}
-				
+
 		if (venda.idCliente.trim() == '') {
 			alert('Selecione o cliente!');
 			return false;
@@ -67,11 +70,13 @@ function salvar() {
 		dataType: 'json',
 		data: { venda }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Venda salva com sucesso!');
-			window.location.replace('ListaVendas.php');
-		} else {
-			alert('Problemas ao salvar. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Venda salva com sucesso!');
+				window.location.replace('ListaVendas.php');
+			} else {
+				alert('Problemas ao salvar. ' + (data.msg || ''));
+			}
 		}
 	});
 }
@@ -86,11 +91,13 @@ function excluir(id) {
 		dataType: 'json',
 		data: { 'id': id }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Excluída com sucesso!');
-			window.location.replace('ListaVendas.php');
-		} else {
-			alert('Problemas ao excluir. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Excluída com sucesso!');
+				window.location.replace('ListaVendas.php');
+			} else {
+				alert('Problemas ao excluir. ' + (data.msg || ''));
+			}
 		}
 	});
 }

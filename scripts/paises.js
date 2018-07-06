@@ -8,9 +8,11 @@ function obterPais() {
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function (pais) {
-		$('#nome').val(pais.nome);
-		$('#moeda').val(pais.moeda);
-		$('#codigoMoeda').val(pais.codigo_moeda);
+		if (!displayErrors(pais)) {
+			$('#nome').val(pais.nome);
+			$('#moeda').val(pais.moeda);
+			$('#codigoMoeda').val(pais.codigo_moeda);
+		}
 	});
 }
 
@@ -19,18 +21,20 @@ function listar() {
 		url: 'Services/ListarPaises.php',
 		dataType: 'json'
 	}).done(function (paises) {
-		$.each(paises, function () {
-			$('#listaPaises').append(
-				$('<tr>').append(
-					$('<td>', { 'text': this.nome }),
-					$('<td>', { 'text': this.moeda }),
-					$('<td>').append(
-						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+		if (!displayErrors(paises)) {
+			$.each(paises, function () {
+				$('#listaPaises').append(
+					$('<tr>').append(
+						$('<td>', { 'text': this.nome }),
+						$('<td>', { 'text': this.moeda }),
+						$('<td>').append(
+							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+						)
 					)
-				)
-			);
-		});
+				);
+			});
+		}
 	});
 }
 
@@ -53,11 +57,13 @@ function salvar() {
 		dataType: 'json',
 		data: { pais }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Salvo com sucesso!');
-			window.location.replace('ListaPaises.php');
-		} else {
-			alert('Problemas ao salvar. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Salvo com sucesso!');
+				window.location.replace('ListaPaises.php');
+			} else {
+				alert('Problemas ao salvar. ' + (data.msg || ''));
+			}
 		}
 	});
 }
@@ -72,11 +78,13 @@ function excluir(id) {
 		dataType: 'json',
 		data: { 'id': id }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Excluído com sucesso!');
-			window.location.replace('ListaPaises.php');
-		} else {
-			alert('Problemas ao excluir. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Excluído com sucesso!');
+				window.location.replace('ListaPaises.php');
+			} else {
+				alert('Problemas ao excluir. ' + (data.msg || ''));
+			}
 		}
 	});
 }

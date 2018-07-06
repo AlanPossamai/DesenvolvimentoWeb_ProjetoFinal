@@ -1,6 +1,8 @@
 <?php
 
-require_once '../config.php';
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
 
 class ClienteRepository implements IRepository {
 	private $conn;
@@ -43,7 +45,7 @@ class ClienteRepository implements IRepository {
 		$stmt->execute();
 		return $stmt->fetch();
 	}
-	
+
 	public function getAll() {
 		throw new Exception("Method not allowed");
 	}

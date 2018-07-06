@@ -21,10 +21,10 @@ USE `aluno_abc_group`;
 -- Table structure for table `clientes`
 --
 
-DROP TABLE IF EXISTS `clientes`;
+DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `clientes` (
+CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `idEmpresa` int(11) DEFAULT NULL,
@@ -63,8 +63,7 @@ CREATE TABLE `pais` (
   `nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `moeda` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `codigo_moeda` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `codigo_moeda` (`codigo_moeda`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,15 +71,14 @@ CREATE TABLE `pais` (
 -- Table structure for table `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
+CREATE TABLE `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `login` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `senha` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `tipo` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'E',
   `idEmpresa` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
@@ -90,13 +88,13 @@ CREATE TABLE `usuarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `vendas`
+-- Table structure for table `venda`
 --
 
-DROP TABLE IF EXISTS `vendas`;
+DROP TABLE IF EXISTS `venda`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vendas` (
+CREATE TABLE `venda` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idCliente` int(11) DEFAULT NULL,
   `idEmpresa` int(11) DEFAULT NULL,

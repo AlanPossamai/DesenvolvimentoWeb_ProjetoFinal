@@ -1,6 +1,8 @@
 <?php
 
-require_once '../config.php';
+if (file_exists('../config.php')) {
+	require_once '../config.php';
+}
 
 class VendaRepository implements IRepository {
 	private $conn;
@@ -44,11 +46,11 @@ class VendaRepository implements IRepository {
 		$stmt->execute();
 		return $stmt->fetch();
 	}
-	
+
 	public function getAll() {
 		throw new Exception("Method not allowed");
 	}
-	
+
 	public function getByEmpresa($idEmpresa) {
 		$query = 'SELECT v.*, e.nome AS empresa, c.nome AS cliente ' .
 			'FROM venda v ' .

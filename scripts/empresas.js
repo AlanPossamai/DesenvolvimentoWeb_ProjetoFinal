@@ -8,9 +8,10 @@ function obter() {
 		dataType: 'json',
 		data: { 'id': $.urlParam('id') }
 	}).done(function(empresa) {
-		console.log(empresa);
-		$('#nome').val(empresa.nome);
-		$('#pais').val(empresa.idPais).change();
+		if (!displayErrors(empresa)) {
+			$('#nome').val(empresa.nome);
+			$('#pais').val(empresa.idPais).change();
+		}
 	});
 }
 
@@ -19,18 +20,20 @@ function listar() {
 		url: 'Services/ListarEmpresas.php',
 		dataType: 'json'
 	}).done(function(empresas) {
-		$.each(empresas, function() {
-			$('#listaEmpresas').append(
-				$('<tr>').append(
-					$('<td>', { 'text': this.nome }),
-					$('<td>', { 'text': this.pais }),
-					$('<td>').append(
-						$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-						$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+		if (!displayErrors(empresas)) {
+			$.each(empresas, function() {
+				$('#listaEmpresas').append(
+					$('<tr>').append(
+						$('<td>', { 'text': this.nome }),
+						$('<td>', { 'text': this.pais }),
+						$('<td>').append(
+							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+						)
 					)
-				)
-			);
-		});
+				);
+			});
+		}
 	});
 }
 
@@ -50,11 +53,13 @@ function salvar() {
 		dataType: 'json',
 		data: { empresa }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Empresa salva com sucesso!');
-			window.location.replace('ListaEmpresas.php');
-		} else {
-			alert('Problemas ao salvar. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Empresa salva com sucesso!');
+				window.location.replace('ListaEmpresas.php');
+			} else {
+				alert('Problemas ao salvar. ' + (data.msg || ''));
+			}
 		}
 	});
 }
@@ -69,11 +74,13 @@ function excluir(id) {
 		dataType: 'json',
 		data: { 'id': id }
 	}).always(function (data) {
-		if (data.success) {
-			alert('Excluída com sucesso!');
-			window.location.replace('ListaEmpresas.php');
-		} else {
-			alert('Problemas ao excluir. ' + (data.msg || ''));
+		if (!displayErrors(data)) {
+			if (data.success) {
+				alert('Excluída com sucesso!');
+				window.location.replace('ListaEmpresas.php');
+			} else {
+				alert('Problemas ao excluir. ' + (data.msg || ''));
+			}
 		}
 	});
 }
@@ -83,14 +90,16 @@ function obterPaises() {
 		url: 'Services/ListarPaises.php',
 		dataType: 'json'
 	}).always(function(paises) {
-		$.each(paises, function() {
-			$('#pais').append(
-				$('<option>', {
-					'value': this.id,
-					'text': this.nome
-				})
-			);
-		});
+		if (!displayErrors(paises)) {
+			$.each(paises, function() {
+				$('#pais').append(
+					$('<option>', {
+						'value': this.id,
+						'text': this.nome
+					})
+				);
+			});
+		}
 	});
 }
 

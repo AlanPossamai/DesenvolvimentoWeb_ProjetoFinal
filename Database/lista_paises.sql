@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `paises` (
 -- Extraindo dados da tabela `paises`
 --
 
-INSERT INTO `paises` (`moeda`, `codigo_moeda`, `nome`) VALUES
+INSERT INTO `pais` (`moeda`, `codigo_moeda`, `nome`) VALUES
 ('AFEGANE AFEGANIST', 'AFN', 'AFEGANISTAO'),
 ('LEK ALBANIA REP', 'ALL', 'ALBANIA, REPUBLICA DA'),
 ('EURO', 'EUR', 'ALEMANHA'),

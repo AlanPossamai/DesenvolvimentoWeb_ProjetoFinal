@@ -16,23 +16,23 @@ class UsuarioRepository implements IRepository {
 	}
 
 	public function add($user) {
-		return $this->conn::insertQuery($user);
+		return MySqlConnection::insertQuery($user);
 	}
 
 	public function update($user) {
-		return $this->conn::updateQuery($user);
+		return MySqlConnection::updateQuery($user);
 	}
 
 	public function delete($id) {
 		$query = 'DELETE FROM usuario WHERE id = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		return $stmt->execute();
 	}
 
 	public function getById($id) {
 		$query = 'SELECT * FROM usuario WHERE id = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetch();
@@ -40,7 +40,7 @@ class UsuarioRepository implements IRepository {
 
 	public function getByLogin($login) {
 		$query = 'SELECT * FROM usuario WHERE login = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $login, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetch();
@@ -56,7 +56,7 @@ class UsuarioRepository implements IRepository {
 			$query .= 'WHERE u.idEmpresa = ?';
 		}
 
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 
 		if ($idEmpresa) {
 			$stmt->bindParam(1, $idEmpresa, PDO::PARAM_INT);
@@ -68,7 +68,7 @@ class UsuarioRepository implements IRepository {
 
 	public function isAdministrator($id) {
 		$query = 'SELECT idEmpresa FROM usuario WHERE id = ?';
-		$stmt = $this->conn::$connection->prepare($query);
+		$stmt = MySqlConnection::$connection->prepare($query);
 		$stmt->bindParam(1, $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$rs = $stmt->fetch(PDO::FETCH_ASSOC);

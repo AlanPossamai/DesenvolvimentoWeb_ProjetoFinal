@@ -110,4 +110,6 @@ CREATE TABLE `venda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `usuario` (`id`, `nome`, `login`, `senha`, `idEmpresa`) VALUES (NULL, 'Conselho', 'conselho', 'conselho', NULL);
+
 -- Dump completed on 2018-07-03  0:35:51

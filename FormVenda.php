@@ -41,7 +41,7 @@
 			</div>
 			<div class="row mb-6 mt-4">
 				<div class="col">
-					<label for="valor">Valor</label>
+					<label for="valor">Valor <span id="moeda"></span></label>
 					<input type="number" class="form-control" id="valor" name="valor">
 				</div>
 				<div class="col">
@@ -58,7 +58,6 @@
 			</div>
 		</div>
 
-		<?php include_once("./rodape.php"); ?>
 	</div>
 	<div class="wait"></div>
 

@@ -51,7 +51,6 @@
 			</div>
 		</form>
 
-		<?php include_once("./rodape.php"); ?>
 	</div>
 	<div class="wait"></div>
 

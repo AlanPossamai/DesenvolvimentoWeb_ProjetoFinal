@@ -21,9 +21,9 @@
 				<h1>Vendas</h1>
 			</div>
 			<div class="col-sm-3">
-                                <a type="button" class="btn btn-primary float-right mt-3" href="ListaVendasConselho.php">Voltar</a>
+				<a type="button" class="btn btn-primary float-right mt-3" href="ListaVendasConselho.php">Voltar</a>
 			</div>
-                        <div class="col-sm-5">
+			<div class="col-sm-5">
 				<div id="piechart"></div>
 			</div>
 		</div>
@@ -41,7 +41,6 @@
 					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
-			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
 	<div class="wait"></div>
@@ -58,15 +57,15 @@
 	<link rel="stylesheet" href="styles/styles.css">
 	<script type="text/javascript" src="scripts/utils.js"></script>
 	<script type="text/javascript" src="scripts/vendasConselho.js"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 	<script>
 		$(function() {
 			visualizar();
-                        vincularEventos();
+			vincularEventos();
 		});
 	</script>
-        
+
 </body>
 
-</html>		
+</html>

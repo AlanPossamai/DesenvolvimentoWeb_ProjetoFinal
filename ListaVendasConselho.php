@@ -20,12 +20,12 @@
 			<div class="col-sm-6">
 				<h1>Vendas</h1>
 			</div>
-                        <div class="col-sm-3">
+			<div class="col-sm-3">
 				<select name="empresa" id="idEmpresa" class="form-control">
-                                    <option value="0">Selecione</option>
-                                </select>
+					<option value="0">Selecione</option>
+				</select>
 			</div>
-                        <div class="col-sm-3">
+			<div class="col-sm-3">
 				<a type="button" id="visualizar" class="btn btn-primary float-right mt-3" href="#">Pesquisar</a>
 			</div>
 		</div>
@@ -44,7 +44,6 @@
 					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
-			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
 	<div class="wait"></div>
@@ -65,10 +64,10 @@
 	<script>
 		$(function() {
 			listar();
-                        obterEmpresas();
-                        vincularEventos();
+			obterEmpresas();
+			vincularEventos();
 		});
 	</script>
 </body>
 
-</html>		
+</html>

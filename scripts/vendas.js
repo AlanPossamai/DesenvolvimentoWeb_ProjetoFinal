@@ -15,6 +15,14 @@ function obter() {
 			$('#empresa').val(venda.idEmpresa);
 			$('#cliente').val(venda.idCliente).change();
 		}
+
+		$.ajax({
+			url: 'Services/ObterMoeda.php',
+			dataType: 'json',
+			data: { 'id': $.urlParam('id') }
+		}).done(function (moeda) {
+			$('#moeda').html(' (' + moeda.codigo_moeda + ')');
+		});
 	});
 }
 

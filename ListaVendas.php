@@ -38,7 +38,6 @@
 					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
-			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
 	<div class="wait"></div>

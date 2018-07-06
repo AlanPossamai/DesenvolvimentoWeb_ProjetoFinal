@@ -3,13 +3,14 @@
 const CURRENCY_QUOTE_API_URL = 'http://free.currencyconverterapi.com/api/v5/convert?';
 $response = null;
 
-if (isset($_GET['from']) && isset($_GET['to']) && !empty($_GET['from']) && !empty($_GET['to'])) {
-	$response = getQuote($_GET['from'], $_GET['to']);
+if (isset($_GET['to']) && !empty($_GET['to'])) {
+	$from = (isset($_GET['from']) ? $_GET['from'] : 'USDd');
+	$response = getQuote($from, $_GET['to']);
 }
 
 echo ($response ? $response : '{"error": "Não foi possível obter a cotação."}');
 
-function getQuote($fromCurrency = 'BRL', $toCurrency = 'USD') {
+function getQuote($fromCurrency = 'USD', $toCurrency = 'BRL') {
 	$currencysToConvert = $fromCurrency . '_' . $toCurrency;
 	$getParams = array('q' => $currencysToConvert, 'compact' => 'y');
 	$apiEndpoint = CURRENCY_QUOTE_API_URL . http_build_query($getParams);

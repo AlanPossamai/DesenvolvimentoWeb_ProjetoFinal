@@ -10,11 +10,16 @@ function login() {
 		url: 'Services/Auth.php',
 		dataType: 'json',
 		data: getFormData($('#formLogin'))
-	}).always(function (response) {
+	}).always(function(response) {
 		if (response.success) {
 			setCookie('idEmpresa', response.idEmpresa, '');
 
-			window.location.assign('./InicialEmpresa.php');
+			if (response.idEmpresa) {
+				window.location.assign('./InicialEmpresa.php');
+			} else {
+				window.location.assign('./InicialConselho.php');
+			}
+
 		} else if (response.errorMessage) {
 			alert('Não foi possível logar: ' + response.errorMessage);
 		} else {

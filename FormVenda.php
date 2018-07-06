@@ -41,11 +41,11 @@
 			</div>
 			<div class="row mb-6 mt-4">
 				<div class="col">
-					<label for="inputEmail">Valor</label>
+					<label for="valor">Valor</label>
 					<input type="number" class="form-control" id="valor" name="valor">
 				</div>
 				<div class="col">
-					<label for="inputEmail">Cotação do Dólar</label>
+					<label for="cotacaoDolar">Cotação do Dólar</label>
 					<input type="number" class="form-control" id="cotacaoDolar" name="cotacaoDolar">
 				</div>
 			</div>
@@ -77,31 +77,47 @@
 
 	<script>
 		$(function() {
-                        
-                        if($.urlParam('id') == 0) {
-                                $.ajax({
-                                        url: 'Services/ObterMoeda.php',
-                                        dataType: 'json',
-                                        data: { 'id': $.urlParam('id') }
-                                }).done(function (pais) {
-                                        if (!displayErrors(pais)) {
-                                                $('#moeda').html(pais.codigo_moeda);
-                                                console.log('http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y');
 
-                                                $.ajax({
-                                                        url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
-                                                        dataType: 'json'
-                                                }).done(function(result) {
-                                                        if (!displayErrors(result)) {
-                                                            $.each(result, function() {
-                                                                $("#cotacaoDolar").val(this.val.toFixed(2));
-                                                            });
-                                                        }
-                                                });
-                                        }
-                                });
-                        }
-                        
+			if($.urlParam('id') == 0) {
+				$.ajax({
+					url: 'Services/ObterMoeda.php',
+					dataType: 'json',
+					data: { 'id': $.urlParam('id') }
+				}).done(function (pais) {
+					if (!displayErrors(pais)) {
+						$('#moeda').html(pais.codigo_moeda);
+
+						// $.ajax({
+						// 	url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
+						// 	dataType: 'json'
+						// }).done(function(result) {
+						// 	if (!displayErrors(result)) {
+						// 		$.each(result, function() {
+						// 			$("#cotacaoDolar").val(this.val.toFixed(2));
+						// 		});
+						// 	}
+						// });
+
+						$.ajax({
+							url: './Utils/currencyQuotes.php',
+							dataType: 'json',
+							data: { 'to': pais.codigo_moeda }
+						}).always(function(result) {
+							if (result.error) {
+								$('#cotacaoDolar').siblings('label').append(
+									$('<small>', {
+										'style': 'color: red;',
+										'html': '&emsp;' + result.error
+									})
+								);
+							} else {
+								$("#cotacaoDolar").val(result.toFixed(2));
+							}
+						});
+					}
+				});
+			}
+
 			obterClientes();
 			adaptarCampos();
 			vincularEventos();

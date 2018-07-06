@@ -7,10 +7,12 @@ if (file_exists('../config.php')) {
 Authenticator::requireLogin();
 
 try {
-	sleep(mt_rand(0, 20) * 0.1);
-
 	$paisRepository = new PaisRepository();
-        $result = $paisRepository->getById(Session::getInstance()->getByKey("idEmpresa"));
+	$empresaRepository = new EmpresaRepository();
+
+	$idEmpresa = Session::getInstance()->getByKey('idEmpresa');
+	$empresa = $empresaRepository->getById($idEmpresa);
+	$result = $paisRepository->getById($empresa['idPais']);
 
 	echo json_encode($result);
 } catch(Exception $e) {

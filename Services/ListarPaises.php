@@ -8,8 +8,6 @@ Authenticator::requireLogin();
 Authenticator::verifyPermission('gerenciar países');
 
 try {
-	sleep(mt_rand(0, 20) * 0.1);
-
 	$paisRepository = new PaisRepository();
 
 	if (isset($_GET['id']) && !empty($_GET['id'])) {

@@ -6,8 +6,6 @@ if (file_exists('../config.php')) {
 Authenticator::requireLogin();
 
 try {
-	sleep(mt_rand(0, 20) * 0.1);
-
 	$vendaRepository = new VendaRepository();
 
 	if (isset($_GET['id']) && !empty($_GET['id'])) {

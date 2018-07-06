@@ -17,7 +17,7 @@ function visualizar(idEmpresa) {
 					)
 				)
 			});
-                        
+
                         $.ajax({
                                 url: 'Services/ListarGraficoDetalhes.php',
                                 dataType: 'json',
@@ -111,4 +111,12 @@ function vincularEventos() {
                         window.location.replace('DetalhesEmpresa.php?idEmpresa=' + $('#idEmpresa').val());
                 }
 	});
+}
+
+function adaptarCampos() {
+	var idVenda = $.urlParam('id');
+
+	if (idVenda > 0) {
+		obter(idVenda);
+	}
 }

@@ -21,7 +21,15 @@ try {
 		foreach($vendas as $i => $venda) {
 			$vendas[$i]["data"] = DateFormatter::toView($venda["data"]);
 			$vendas[$i]["valorDolar"] = $vendas[$i]["valor"] / $vendas[$i]["cotacaoDolar"];
-                        $vendas[$i]["valorDolar"] = number_format($venda[$i]["valorDolar"], 2, ",", ".");
+			$vendas[$i]["valorDolar"] = number_format($vendas[$i]["valorDolar"], 2, ",", ".");
+		}
+	} elseif (isset($_GET['dash'])) {
+		$vendas = $vendaRepository->getAll();
+
+		foreach($vendas as $i => $venda) {
+			$vendas[$i]["data"] = DateFormatter::toView($venda["data"]);
+			$vendas[$i]["valorDolar"] = $vendas[$i]["valor"] / $vendas[$i]["cotacaoDolar"];
+                        $vendas[$i]["valorDolar"] = round($vendas[$i]["valorDolar"], 2);
 		}
 	} else {
 		$vendas = $vendaRepository->getAll();

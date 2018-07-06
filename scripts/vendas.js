@@ -113,7 +113,8 @@ function excluir(id) {
 function obterClientes() {
 	$.ajax({
 		url: 'Services/ListarCliente.php',
-		dataType: 'json'
+		dataType: 'json',
+		data: { 'empresa': true }
 	}).always(function(paises) {
 		$.each(paises, function() {
 			$('#cliente').append(

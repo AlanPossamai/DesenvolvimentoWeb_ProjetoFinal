@@ -4,7 +4,7 @@ const CURRENCY_QUOTE_API_URL = 'http://free.currencyconverterapi.com/api/v5/conv
 $response = null;
 
 if (isset($_GET['to']) && !empty($_GET['to'])) {
-	$from = (isset($_GET['from']) ? $_GET['from'] : 'USDd');
+	$from = (isset($_GET['from']) ? $_GET['from'] : 'USD');
 	$response = getQuote($from, $_GET['to']);
 }
 

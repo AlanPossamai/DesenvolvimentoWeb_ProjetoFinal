@@ -15,10 +15,10 @@
 
 <body>
 	<div class="container">
-		<?php include_once("./menuConselho.php"); ?>
+		<?php include_once("./menu.php"); ?>
 		<div class="row mt-3">
 			<div class="col-sm-9">
-				<h1>Nova Venda</h1>
+				<h1  id="titulo">Venda</h1>
 			</div>
 			<div class="col-sm-3">
 				<a type="button" class="btn btn-primary float-right mt-3" href="ListaVendasConselho.php">Voltar</a>
@@ -70,8 +70,8 @@
 
 	<script>
 		$(function() {
+			adaptarCampos();
 			vincularEventos();
-                        obter();
 		});
 	</script>
 </body>

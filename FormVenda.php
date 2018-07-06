@@ -15,7 +15,7 @@
 
 <body>
 	<div class="container">
-		<?php include_once("./menuEmpresa.php"); ?>
+		<?php include_once("./menu.php"); ?>
 		<div class="row mt-3">
 			<div class="col-sm-9">
 				<h1>Nova Venda</h1>
@@ -86,18 +86,6 @@
 				}).done(function (pais) {
 					if (!displayErrors(pais)) {
 						$('#moeda').html(pais.codigo_moeda);
-
-						// $.ajax({
-						// 	url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
-						// 	dataType: 'json'
-						// }).done(function(result) {
-						// 	if (!displayErrors(result)) {
-						// 		$.each(result, function() {
-						// 			$("#cotacaoDolar").val(this.val.toFixed(2));
-						// 		});
-						// 	}
-						// });
-
 						$.ajax({
 							url: './Utils/currencyQuotes.php',
 							dataType: 'json',

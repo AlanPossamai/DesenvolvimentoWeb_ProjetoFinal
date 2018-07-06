@@ -1,19 +1,19 @@
 function listar(idEmpresa) {
 	$.ajax({
 		url: 'Services/ListarVendaConselho.php',
-		dataType: 'json'
+		dataType: 'json',
+		data : { 'dash' : true }
 	}).done(function(vendas) {
 		if (!displayErrors(vendas)) {
                         var total = 0.0;
-                    
+
 			$.each(vendas, function() {
-                                total = parseFloat(total) + parseFloat(this.valor);
+                                total = parseFloat(total) + parseFloat(this.valorDolar);
 			});
-                        
                         $("#total").html(total.toString().replace(".", ","));
 		}
 	});
-                        
+
         $.ajax({
                 url: 'Services/ListarGraficoPorcentagemHome.php',
                 dataType: 'json'
@@ -36,7 +36,7 @@ function listar(idEmpresa) {
                         }
                 }
         });
-                        
+
         $.ajax({
                 url: 'Services/ListarGraficoListaHome.php',
                 dataType: 'json'
@@ -51,9 +51,9 @@ function listar(idEmpresa) {
                           data.addColumn("string", "Empresa");
                           data.addColumn("number", "Faturamento");
                           data.addRows(result.length);
-                          
+
                           var i = 0;
-                          
+
                           $.each(result, function() {
 				data.setValue(i, 0, this[0]);
 				data.setValue(i, 1, this[1]);

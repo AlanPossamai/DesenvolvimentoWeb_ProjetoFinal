@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `aluno_abc_group`;
 CREATE DATABASE  IF NOT EXISTS `aluno_abc_group` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `aluno_abc_group`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
@@ -30,7 +31,7 @@ CREATE TABLE `cliente` (
   `idEmpresa` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idEmpresa` (`idEmpresa`),
-  CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `cliente_idEmpresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -47,7 +48,7 @@ CREATE TABLE `empresa` (
   `idPais` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idPais` (`idPais`),
-  CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idPais`) REFERENCES `pais` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `empresa_idPais` FOREIGN KEY (`idPais`) REFERENCES `pais` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,7 +84,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
   KEY `idEmpresa` (`idEmpresa`),
-  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `usuarios_idEmpresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -104,8 +105,8 @@ CREATE TABLE `venda` (
   PRIMARY KEY (`id`),
   KEY `idCliente` (`idCliente`,`idEmpresa`),
   KEY `idEmpresa` (`idEmpresa`),
-  CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `vendas_ibfk_2` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `vendas_idCliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `vendas_idEmpresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

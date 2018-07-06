@@ -48,7 +48,15 @@ class VendaRepository implements IRepository {
 	}
 
 	public function getAll() {
-		throw new Exception("Method not allowed");
+		$query = 'SELECT v.*, e.nome AS empresa, c.nome AS cliente ' .
+			'FROM venda v ' .
+			'JOIN empresa e ON e.id = v.idEmpresa ' .
+			'JOIN cliente c ON c.id = v.idCliente ' .
+			'ORDER BY v.data DESC, e.nome, c.nome';
+
+		$stmt = MySqlConnection::$connection->prepare($query);
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 
 	public function getByEmpresa($idEmpresa) {

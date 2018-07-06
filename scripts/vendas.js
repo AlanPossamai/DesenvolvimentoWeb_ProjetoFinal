@@ -22,7 +22,7 @@ function listar() {
 	$.ajax({
 		url: 'Services/ListarVenda.php',
 		dataType: 'json',
-		data: { 'idEmpresa': 1 }
+		data: { 'empresa': true }
 	}).done(function(vendas) {
 		if (!displayErrors(vendas)) {
 			$.each(vendas, function() {

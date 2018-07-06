@@ -1,8 +1,8 @@
 <?php
 
-define('DSN', 'mysql:dbname=aluno_abc_group;host=127.0.0.1;charset=utf8');
-define('USER', 'root');
-define('PASSWORD', '');
+define('DSN', 'mysql:dbname=aluno_abc_group;host=localhost;charset=utf8');
+define('USER', 'teste');
+define('PASSWORD', 'teste');
 
 function autoloadModels($nomeClasse) {
 	if (file_exists('../Models/' . $nomeClasse . '.php')) {

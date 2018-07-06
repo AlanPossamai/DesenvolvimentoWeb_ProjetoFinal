@@ -26,7 +26,7 @@
 		</div>
 		<form id="formCliente" action="javascript:void(0);">
 			<input type="hidden" name="id" id="id" value="0">
-			<input type="hidden" name="idEmpresa" id="idEmpresa" value="1">
+			<input type="hidden" name="idEmpresa" id="idEmpresa" value="<?php echo Session::getInstance()->getByKey("idEmpresa"); ?>">
 
 			<div class="row mb-6 mt-4">
 				<div class="col">

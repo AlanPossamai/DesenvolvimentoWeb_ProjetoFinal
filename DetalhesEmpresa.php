@@ -10,25 +10,21 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
-	<title>Detalhes Empresa</title>
+	<title>ABC Group - Gerenciar Vendas</title>
 </head>
-
-<?php
-	include_once("./menu.php");
-	include_once("./rodape.php");
-?>
 
 <body>
 	<div class="container">
-		<div class="row mb-6 mt-4">
-			<div class="col-sm-9">
-				<h1>Vendas - Empresa Y</h1>
-				<a type="button" class="btn btn-primary" href="./NovaVendaConselho">Nova Venda</a>
-				<a type="button" class="btn btn-primary" href="./ListaVendasConselho">Voltar</a>
+		<?php include_once("./menu.php"); ?>
+		<div class="row mt-3">
+			<div class="col-sm-4">
+				<h1>Vendas</h1>
 			</div>
 			<div class="col-sm-3">
-				Grafico
+                                <a type="button" class="btn btn-primary float-right mt-3" href="ListaVendasConselho.php">Voltar</a>
+			</div>
+                        <div class="col-sm-5">
+				<div id="piechart"></div>
 			</div>
 		</div>
 		<div class="row mb-6 mt-4 text-center">
@@ -42,20 +38,35 @@
 							<th scope="col">Ações</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">3</th>
-							<td>teste</td>
-							<td>teste</td>
-							<td>
-								<a type="button" class="btn btn-success" href="#">Ver Detalhes</a>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
+			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
+	<div class="wait"></div>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="Includes/dist/css/bootstrap.min.css">
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="Includes/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="Includes/assets/js/vendor/popper.min.js"></script>
+	<script type="text/javascript" src="Includes/dist/js/bootstrap.min.js"></script>
+
+	<!-- Project properties -->
+	<link rel="stylesheet" href="styles/styles.css">
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script type="text/javascript" src="scripts/vendasConselho.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script>
+		$(function() {
+			visualizar();
+                        vincularEventos();
+		});
+	</script>
+        
 </body>
 
-</html>
+</html>		

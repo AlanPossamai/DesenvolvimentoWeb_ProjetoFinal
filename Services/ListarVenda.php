@@ -14,8 +14,8 @@ try {
 	if (isset($_GET['id']) && !empty($_GET['id'])) {
 		$vendas = $vendaRepository->getById($_GET['id']);
 		$vendas["data"] = DateFormatter::toView($vendas["data"]);
-	} elseif (isset($_GET['idEmpresa']) && !empty($_GET['idEmpresa'])) {
-		$vendas = $vendaRepository->getByEmpresa($_GET['idEmpresa']);
+	} elseif (isset($_GET['empresa'])) {
+		$vendas = $vendaRepository->getByEmpresa(Session::getInstance()->getByKey("idEmpresa"));
 
 		foreach($vendas as $i => $venda) {
 			$vendas[$i]["data"] = DateFormatter::toView($venda["data"]);

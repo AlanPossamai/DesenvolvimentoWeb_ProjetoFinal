@@ -19,7 +19,7 @@ function listar() {
 	$.ajax({
 		url: 'Services/ListarCliente.php',
 		dataType: 'json',
-		data: { 'idEmpresa': 1 }
+		data: { 'empresa': true }
 	}).done(function(clientes) {
 		if (!displayErrors(clientes)) {
 			$.each(clientes, function() {

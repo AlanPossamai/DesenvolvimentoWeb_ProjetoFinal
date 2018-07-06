@@ -10,38 +10,23 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="bootstrap-4.0.0/bootstrap.min.css">
-	<title>Vendas Conselho</title>
+	<title>ABC Group - Gerenciar Vendas</title>
 </head>
-
-<?php
-	include_once("./menu.php");
-	include_once("./rodape.php");
-?>
 
 <body>
 	<div class="container">
-		<div class="row mb-6 mt-4">
-			<div class="col-sm-3">
+		<?php include_once("./menu.php"); ?>
+		<div class="row mt-3">
+			<div class="col-sm-6">
 				<h1>Vendas</h1>
 			</div>
-			<div class="col-sm-3">
-				<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-					<div class="btn-group" role="group">
-						<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-						 aria-expanded="false">
-							Selecione a Empresa
-						</button>
-						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-							<a class="dropdown-item" href="#">Empresa1</a>
-							<a class="dropdown-item" href="#">Empresa2</a>
-						</div>
-					</div>
-				</div>
+                        <div class="col-sm-3">
+				<select name="empresa" id="idEmpresa" class="form-control">
+                                    <option value="0">Selecione</option>
+                                </select>
 			</div>
-
-			<div class="col-sm-3">
-				<a type="button" class="btn btn-primary" href="#">Pesquisar</a>
+                        <div class="col-sm-3">
+				<a type="button" id="visualizar" class="btn btn-primary float-right mt-3" href="#">Pesquisar</a>
 			</div>
 		</div>
 		<div class="row mb-6 mt-4 text-center">
@@ -56,21 +41,34 @@
 							<th scope="col">Ações</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">3</th>
-							<td>teste</td>
-							<td>teste</td>
-							<td>teste</td>
-							<td>
-								<a type="button" class="btn btn-success" href="#">Ver Detalhes</a>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="listaVendas"></tbody>
 				</table>
 			</div>
+			<?php include_once("./rodape.php"); ?>
 		</div>
 	</div>
+	<div class="wait"></div>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="Includes/dist/css/bootstrap.min.css">
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="Includes/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="Includes/assets/js/vendor/popper.min.js"></script>
+	<script type="text/javascript" src="Includes/dist/js/bootstrap.min.js"></script>
+
+	<!-- Project properties -->
+	<link rel="stylesheet" href="styles/styles.css">
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script type="text/javascript" src="scripts/vendasConselho.js"></script>
+
+	<script>
+		$(function() {
+			listar();
+                        obterEmpresas();
+                        vincularEventos();
+		});
+	</script>
 </body>
 
-</html>
+</html>		

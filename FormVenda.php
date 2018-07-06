@@ -26,7 +26,7 @@
 		</div>
 		<form id="formVenda" action="javascript:void(0);">
 			<input type="hidden" name="id" id="id" value="0">
-			<input type="hidden" name="idEmpresa" id="idEmpresa" value="1">
+			<input type="hidden" name="idEmpresa" id="idEmpresa" value="<?php echo Session::getInstance()->getByKey("idEmpresa"); ?>">
 			<div class="row mb-6 mt-4">
 				<div class="col">
 					<label for="inputEmail">Cliente</label>
@@ -77,6 +77,29 @@
 
 	<script>
 		$(function() {
+        
+                        $.ajax({
+                                url: 'Services/ObterMoeda.php',
+                                dataType: 'json',
+                                data: { 'id': $.urlParam('id') }
+                        }).done(function (pais) {
+                                if (!displayErrors(pais)) {
+                                        $('#moeda').html(pais.codigo_moeda);
+                                        console.log('http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y');
+
+                                        $.ajax({
+                                                url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
+                                                dataType: 'json'
+                                        }).done(function(result) {
+                                                if (!displayErrors(result)) {
+                                                    $.each(result, function() {
+                                                        $("#cotacaoDolar").val(this.val.toFixed(2));
+                                                    });
+                                                }
+                                        });
+                                }
+                        });
+                        
 			obterClientes();
 			adaptarCampos();
 			vincularEventos();

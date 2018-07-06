@@ -47,7 +47,14 @@ class ClienteRepository implements IRepository {
 	}
 
 	public function getAll() {
-		throw new Exception("Method not allowed");
+		$query = 'SELECT c.*, e.nome AS pais ' .
+			'FROM cliente c ' .
+			'JOIN empresa e ON e.id = c.idEmpresa ' .
+			'ORDER BY c.nome, e.nome';
+
+		$stmt = MySqlConnection::$connection->prepare($query);
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 
 	public function getByEmpresa($idEmpresa) {

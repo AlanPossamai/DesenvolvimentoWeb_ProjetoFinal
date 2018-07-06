@@ -42,11 +42,11 @@
 			<div class="row mb-6 mt-4">
 				<div class="col">
 					<label for="inputEmail">Valor</label>
-					<input type="text" class="form-control" id="valor" name="valor">
+					<input type="number" class="form-control" id="valor" name="valor">
 				</div>
 				<div class="col">
 					<label for="inputEmail">Cotação do Dólar</label>
-					<input type="text" class="form-control" id="cotacaoDolar" name="cotacaoDolar">
+					<input type="number" class="form-control" id="cotacaoDolar" name="cotacaoDolar">
 				</div>
 			</div>
 		</form>
@@ -77,28 +77,30 @@
 
 	<script>
 		$(function() {
-        
-                        $.ajax({
-                                url: 'Services/ObterMoeda.php',
-                                dataType: 'json',
-                                data: { 'id': $.urlParam('id') }
-                        }).done(function (pais) {
-                                if (!displayErrors(pais)) {
-                                        $('#moeda').html(pais.codigo_moeda);
-                                        console.log('http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y');
+                        
+                        if($.urlParam('id') == 0) {
+                                $.ajax({
+                                        url: 'Services/ObterMoeda.php',
+                                        dataType: 'json',
+                                        data: { 'id': $.urlParam('id') }
+                                }).done(function (pais) {
+                                        if (!displayErrors(pais)) {
+                                                $('#moeda').html(pais.codigo_moeda);
+                                                console.log('http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y');
 
-                                        $.ajax({
-                                                url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
-                                                dataType: 'json'
-                                        }).done(function(result) {
-                                                if (!displayErrors(result)) {
-                                                    $.each(result, function() {
-                                                        $("#cotacaoDolar").val(this.val.toFixed(2));
-                                                    });
-                                                }
-                                        });
-                                }
-                        });
+                                                $.ajax({
+                                                        url: 'http://free.currencyconverterapi.com/api/v5/convert?q=USD_' + pais.codigo_moeda + '&compact=y',
+                                                        dataType: 'json'
+                                                }).done(function(result) {
+                                                        if (!displayErrors(result)) {
+                                                            $.each(result, function() {
+                                                                $("#cotacaoDolar").val(this.val.toFixed(2));
+                                                            });
+                                                        }
+                                                });
+                                        }
+                                });
+                        }
                         
 			obterClientes();
 			adaptarCampos();

@@ -25,19 +25,27 @@ function listar() {
 		data: { 'empresa': true }
 	}).done(function(vendas) {
 		if (!displayErrors(vendas)) {
-			$.each(vendas, function() {
-				$('#listaVendas').append(
-					$('<tr>').append(
-						$('<td>', { 'text': this.cliente }),
-						$('<td>', { 'text': this.data }),
-						$('<td>', { 'text': this.valor }),
-						$('<td>').append(
-							$('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
-							$('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
-						)
-					)
-				)
-			});
+                        $.ajax({
+                                url: 'Services/ObterMoeda.php',
+                                dataType: 'json',
+                                data: { 'id': $.urlParam('id') }
+                        }).done(function (pais) {
+                                if (!displayErrors(pais)) {
+                                        $.each(vendas, function() {
+                                                $('#listaVendas').append(
+                                                        $('<tr>').append(
+                                                                $('<td>', { 'text': this.cliente }),
+                                                                $('<td>', { 'text': this.data }),
+                                                                $('<td>', { 'text': pais.codigo_moeda + " " + this.valor }),
+                                                                $('<td>').append(
+                                                                        $('<button>', { 'class': 'btn btn-success mr-3', 'text': 'Editar', 'onClick': 'editar(' + this.id + ')' }),
+                                                                        $('<button>', { 'class': 'btn btn-danger', 'text': 'Excluir', 'onClick': 'excluir(' + this.id + ')' })
+                                                                )
+                                                        )
+                                                )
+                                        });
+                                }
+                        });
 		}
 	});
 }

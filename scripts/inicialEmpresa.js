@@ -2,7 +2,7 @@ function listar() {
 	$.ajax({
 		url: 'Services/ListarVenda.php',
 		dataType: 'json',
-		data: { 'empresa': true }
+		data: { 'dash': true }
 	}).done(function(vendas) {
 		if (!displayErrors(vendas)) {
                         var total = 0.0;
@@ -11,7 +11,7 @@ function listar() {
                                 total = parseFloat(total) + parseFloat(this.valor);
 			});
                         
-                        $("#total").html(total);
+                        $("#total").html(total.toString().replace(".", ","));
 		}
 	});
         
@@ -30,7 +30,7 @@ function listar() {
                         }).done(function(result) {
                                 if (!displayErrors(result)) {
                                     $.each(result, function() {
-                                        $("#cotacao").html(this.val.toFixed(2));
+                                        $("#cotacao").html(this.val.toFixed(2).toString().replace(".", ","));
                                     });
                                 }
                         });

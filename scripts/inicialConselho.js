@@ -10,7 +10,7 @@ function listar(idEmpresa) {
                                 total = parseFloat(total) + parseFloat(this.valor);
 			});
                         
-                        $("#total").html(total);
+                        $("#total").html(total.toString().replace(".", ","));
 		}
 	});
                         

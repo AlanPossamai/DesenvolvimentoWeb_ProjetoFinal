@@ -3,7 +3,6 @@
 if (file_exists('../config.php')) {
 	require_once '../config.php';
 }
-
 Authenticator::requireLogin();
 
 try {
@@ -18,6 +17,14 @@ try {
 		$vendas = $vendaRepository->getByEmpresa(Session::getInstance()->getByKey("idEmpresa"));
 
 		foreach($vendas as $i => $venda) {
+                        $vendas[$i]["valor"] = number_format($venda["valor"], 2, ",", ".");
+			$vendas[$i]["data"] = DateFormatter::toView($venda["data"]);
+		}
+	} elseif (isset($_GET['dash'])) {
+		$vendas = $vendaRepository->getByEmpresa(Session::getInstance()->getByKey("idEmpresa"));
+
+		foreach($vendas as $i => $venda) {
+                        $vendas[$i]["valor"] = $venda["valor"];
 			$vendas[$i]["data"] = DateFormatter::toView($venda["data"]);
 		}
 	} else {

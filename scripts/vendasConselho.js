@@ -77,7 +77,7 @@ function obter() {
 	}).done(function(venda) {
 		if (!displayErrors(venda)) {
 			$('#data').val(venda.data);
-			$('#valor').val(venda.valor);
+			$('#valor').val(venda.valorDolar);
 			$('#cotacaoDolar').val(venda.cotacaoDolar);
 			$('#empresa').val(venda.empresa);
 			$('#cliente').val(venda.cliente);
